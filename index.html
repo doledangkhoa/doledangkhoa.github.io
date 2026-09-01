@@ -2,192 +2,188 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="DO LE DANG KHOA — Web Developer portfolio. Front-end focused developer with experience in JavaScript, React, Next.js, Laravel and responsive UI development.">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="DO LE DANG KHOA — Web Developer portfolio">
+  <meta name="theme-color" content="#f5f7fb">
   <title>DO LE DANG KHOA — Web Developer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="noise"></div>
-  <header class="site-header">
-    <a class="logo" href="#top">DK<span>.</span></a>
-    <nav>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <header>
+    <a class="brand" href="#home">KHOA<span>.</span></a>
+    <nav aria-label="Primary navigation">
       <a href="#about">About</a>
-      <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
       <a href="#skills">Skills</a>
       <a href="#contact">Contact</a>
     </nav>
-    <a class="github-pill" href="https://github.com/doledangkhoa" target="_blank" rel="noreferrer">GitHub ↗</a>
+    <a class="gh" href="https://github.com/doledangkhoa" target="_blank" rel="noreferrer">GitHub ↗</a>
   </header>
 
-  <main id="top">
-    <section class="hero section">
-      <div class="hero-copy">
-        <p class="eyebrow">WEB DEVELOPER · OSAKA, JAPAN</p>
-        <h1>Building clean,<br><em>useful</em> web experiences.</h1>
-        <p class="lead">I'm DO LE DANG KHOA, a web developer focused on front-end development, responsive UI, and practical products built with JavaScript, React, Next.js and Laravel.</p>
-        <div class="hero-actions">
-          <a class="button primary" href="#projects">View projects</a>
-          <a class="button secondary" href="mailto:mrnst21@gmail.com">Get in touch</a>
+  <main>
+    <section id="home" class="hero">
+      <div class="copy reveal">
+        <label>HELLO, I'M 👋</label>
+        <h1>DO LE DANG <strong>KHOA</strong></h1>
+        <h3>WEB DEVELOPER <i>&lt;/&gt;</i></h3>
+        <p>I build modern, responsive and user-friendly web applications. Focused on front-end development, continuous learning, and turning ideas into useful products.</p>
+        <div class="actions">
+          <a class="btn accent" href="#projects">View my work →</a>
+          <a class="btn" href="https://github.com/doledangkhoa" target="_blank" rel="noreferrer">◉ GitHub</a>
+        </div>
+        <div class="stats">
+          <b>3+ <small>Years<br>learning & building</small></b>
+          <b>5 <small>Personal<br>projects</small></b>
+          <b>N2 <small>JLPT<br>Japanese</small></b>
+          <b>6.5 <small>IELTS<br>English</small></b>
         </div>
       </div>
-      <div class="hero-card">
-        <div class="terminal-top"><span></span><span></span><span></span></div>
-        <pre><code><span class="muted">const</span> developer = {
-  name: <span class="string">"DO LE DANG KHOA"</span>,
-  focus: <span class="string">"Front-end"</span>,
-  stack: [
-    <span class="string">"JavaScript"</span>,
-    <span class="string">"React / Next.js"</span>,
-    <span class="string">"Laravel"</span>
-  ],
-  languages: [<span class="string">"VI"</span>, <span class="string">"EN"</span>, <span class="string">"JA"</span>]
-};</code></pre>
+
+      <div class="visual reveal" data-tilt-card>
+        <canvas id="scene" aria-label="Interactive 3D developer scene"></canvas>
+        <div class="visual-orbit orbit-one"></div>
+        <div class="visual-orbit orbit-two"></div>
+        <div class="bubble">CODE<br>LEARN<br>IMPROVE<br><span>REPEAT ♥</span></div>
+        <div class="three-badge">THREE.JS · INTERACTIVE</div>
       </div>
     </section>
 
-    <section id="about" class="section split">
-      <div>
-        <p class="eyebrow">01 / ABOUT</p>
-        <h2>Curious by nature.<br>Persistent by practice.</h2>
-      </div>
-      <div class="body-copy">
-        <p>I studied Information Technology at the University of Information Technology, Vietnam National University Ho Chi Minh City, and built my experience through internships, freelance work, and personal projects.</p>
-        <p>I enjoy taking a problem from an idea to a working interface — designing, implementing, debugging, making it responsive, and publishing the result.</p>
-        <p>When something doesn't work, I prefer to break the problem down, investigate it, test solutions, and keep going until I understand the cause.</p>
-      </div>
-    </section>
-
-    <section id="experience" class="section">
-      <div class="section-heading">
-        <p class="eyebrow">02 / EXPERIENCE</p>
-        <h2>Work experience</h2>
-      </div>
-      <div class="timeline">
-        <article class="timeline-item">
-          <div class="date">JUN 2026 — PRESENT</div>
-          <div>
-            <h3>Web Developer <span>·</span> 株式会社エスピーシステム</h3>
-            <p>Design and development of internal websites and web-based projects for the company and its related initiatives.</p>
-          </div>
-        </article>
-        <article class="timeline-item">
-          <div class="date">NOV 2023 — APR 2024</div>
-          <div>
-            <h3>Freelance Web Developer</h3>
-            <p>Built and maintained the interface of a study-abroad website using Next.js. Worked on UI implementation, bug fixes, and responsive behavior with GitLab.</p>
-          </div>
-        </article>
-        <article class="timeline-item">
-          <div class="date">NOV 2022 — FEB 2023</div>
-          <div>
-            <h3>Web Development Intern <span>·</span> 株式会社 AI POWER</h3>
-            <p>Joined the Bekai motorcycle and automobile insurance website project. Worked with Laravel and Docker and helped identify and fix interface bugs.</p>
-          </div>
-        </article>
+    <section id="about" class="section">
+      <div class="about reveal" data-tilt-card>
+        <div class="avatar">
+          <div>⌘</div>
+          <div class="avatar-ring ring-a"></div>
+          <div class="avatar-ring ring-b"></div>
+          <small>WEB<br>DEVELOPER</small>
+        </div>
+        <div>
+          <p class="kicker">01 / ABOUT ME</p>
+          <h2>Curious by nature.<br><em>Persistent</em> by practice.</h2>
+          <p>I studied Information Technology at the University of Information Technology, Vietnam National University Ho Chi Minh City, and gained experience through an internship, freelance work, and personal development projects.</p>
+          <p>I enjoy building interfaces, fixing bugs, making layouts responsive, and taking projects from implementation to publication.</p>
+        </div>
       </div>
     </section>
 
     <section id="projects" class="section">
-      <div class="section-heading">
-        <p class="eyebrow">03 / SELECTED PROJECTS</p>
-        <h2>Things I've built</h2>
+      <div class="head reveal">
+        <div>
+          <p class="kicker">02 / SELECTED WORK</p>
+          <h2>Things I've <em>built.</em></h2>
+        </div>
+        <a href="https://github.com/doledangkhoa" target="_blank" rel="noreferrer">View GitHub →</a>
       </div>
-      <div class="project-grid">
-        <article class="project-card featured">
-          <div class="project-number">01</div>
-          <div>
-            <p class="project-type">WEB APP · JAVASCRIPT</p>
-            <h3>Pokédex</h3>
-            <p>A browser-based Pokédex with search, list and detail views. Uses API-based asynchronous communication and includes error handling and responsive UI.</p>
-            <div class="tags"><span>JavaScript</span><span>HTML</span><span>CSS</span><span>REST API</span></div>
+
+      <div class="projects">
+        <article class="project p1 reveal pokemon-card" data-tilt-card>
+          <span class="num">01</span>
+          <div class="art pokemon-art">
+            <canvas class="mini-scene" data-scene="pokeball" aria-label="Animated 3D Poké Ball"></canvas>
+            <div class="poke-hud">
+              <span>POKÉDEX // API</span>
+              <span>LIVE 3D</span>
+            </div>
+            <div class="scan-line"></div>
+          </div>
+          <div class="body">
+            <small>WEB APP · JAVASCRIPT</small>
+            <h3>Pokédex <span class="live-dot"></span></h3>
+            <p>Search, list and detail views using the Pokémon API, with asynchronous requests, error handling and responsive UI.</p>
+            <div class="tags"><i>JavaScript</i><i>API</i><i>HTML</i><i>CSS</i><i>3D UI</i></div>
           </div>
         </article>
-        <article class="project-card">
-          <div class="project-number">02</div>
-          <div>
-            <p class="project-type">E-COMMERCE UI</p>
+
+        <article class="project p2 reveal" data-tilt-card>
+          <span class="num">02</span>
+          <div class="art"><div class="shoe">⌁</div><div class="platform"></div><div class="float-chip chip-a">UI</div><div class="float-chip chip-b">SHOP</div></div>
+          <div class="body">
+            <small>E-COMMERCE UI</small>
             <h3>Sneaker Shop</h3>
-            <p>A sneaker store template featuring product listing, product details, cart functionality and responsive design.</p>
-            <div class="tags"><span>JavaScript</span><span>HTML</span><span>CSS</span><span>UI/UX</span></div>
+            <p>Responsive sneaker store template with product listing, details, cart functionality and UI/UX improvements.</p>
+            <div class="tags"><i>JavaScript</i><i>HTML</i><i>CSS</i></div>
           </div>
         </article>
-        <article class="project-card">
-          <div class="project-number">03</div>
-          <div>
-            <p class="project-type">MOBILE APP</p>
-            <h3>Pokédex Mobile</h3>
-            <p>A cross-platform Pokédex application with API data fetching, list/detail screens, navigation and screen-transition animation.</p>
-            <div class="tags"><span>C#</span><span>Xamarin.Forms</span><span>API</span></div>
+
+        <article class="project p3 reveal pokemon-card" data-tilt-card>
+          <span class="num">03</span>
+          <div class="art pika-art">
+            <canvas class="mini-scene" data-scene="pikachu" aria-label="Animated low-poly Pikachu"></canvas>
+            <div class="spark spark-a">✦</div><div class="spark spark-b">✧</div><div class="spark spark-c">✦</div>
+          </div>
+          <div class="body">
+            <small>MOBILE APP</small>
+            <h3>Pokédex Mobile <span class="live-dot"></span></h3>
+            <p>Cross-platform mobile Pokédex with API data, list/detail screens, navigation and transition animation.</p>
+            <div class="tags"><i>C#</i><i>Xamarin.Forms</i><i>API</i><i>3D Motion</i></div>
           </div>
         </article>
-        <article class="project-card">
-          <div class="project-number">04</div>
-          <div>
-            <p class="project-type">GAME · PYTHON</p>
+
+        <article class="project p4 reveal" data-tilt-card>
+          <span class="num">04</span>
+          <div class="art"><div class="dungeon">◆</div><div class="floor"></div><div class="dungeon-orb orb-a"></div><div class="dungeon-orb orb-b"></div></div>
+          <div class="body">
+            <small>GAME · PYTHON</small>
             <h3>Dungeon-Seeker</h3>
-            <p>An infinite-dungeon game with procedural dungeon generation, player movement, enemy AI, collision detection, score and leveling systems.</p>
-            <div class="tags"><span>Python</span><span>Pygame</span><span>Game Logic</span></div>
+            <p>Infinite dungeon game with procedural generation, player movement, enemy AI, collision detection, scoring and leveling.</p>
+            <div class="tags"><i>Python</i><i>Pygame</i></div>
           </div>
         </article>
-        <article class="project-card">
-          <div class="project-number">05</div>
-          <div>
-            <p class="project-type">MINI GAME · WEB</p>
+
+        <article class="project p5 reveal" data-tilt-card>
+          <span class="num">05</span>
+          <div class="art"><div class="cells">▦</div><div class="timer">00:32</div><div class="focus-ring"></div></div>
+          <div class="body">
+            <small>MINI GAME · WEB</small>
             <h3>Daily-concentrate</h3>
-            <p>A concentration-training game with randomized cells and round-time measurement, created as a focused JavaScript practice project.</p>
-            <div class="tags"><span>JavaScript</span><span>HTML</span><span>CSS</span></div>
+            <p>A concentration-training game with randomized cells and round-time measurement.</p>
+            <div class="tags"><i>JavaScript</i><i>HTML</i><i>CSS</i></div>
           </div>
         </article>
       </div>
     </section>
 
-    <section id="skills" class="section split skills-section">
-      <div>
-        <p class="eyebrow">04 / TOOLKIT</p>
-        <h2>Technologies<br>I work with.</h2>
-      </div>
-      <div class="skills">
-        <div class="skill-group"><span>LANGUAGES</span><p>HTML · CSS · JavaScript · Python · PHP · C#</p></div>
-        <div class="skill-group"><span>FRAMEWORKS</span><p>React.js · Next.js · Tailwind CSS · Laravel</p></div>
-        <div class="skill-group"><span>TOOLS</span><p>Git · GitHub · GitLab · MySQL · XAMPP · Docker · VS Code</p></div>
-        <div class="skill-group"><span>LANGUAGES</span><p>Vietnamese (Native) · English (IELTS 6.5) · Japanese (JLPT N2)</p></div>
+    <section id="experience" class="section">
+      <div class="head reveal"><div><p class="kicker">03 / EXPERIENCE</p><h2>Where I've <em>worked.</em></h2></div></div>
+      <div class="timeline">
+        <div class="exp reveal"><time>JUN 2026 — PRESENT</time><div><h3>株式会社エスピーシステム <small>· Full-time</small></h3><p>Design and development of internal websites and web-based projects.</p></div></div>
+        <div class="exp reveal"><time>NOV 2023 — APR 2024</time><div><h3>Freelance Web Developer</h3><p>Next.js study-abroad website: interface implementation, bug fixing and responsive development using GitLab.</p></div></div>
+        <div class="exp reveal"><time>NOV 2022 — FEB 2023</time><div><h3>株式会社 AI POWER <small>· Intern</small></h3><p>Bekai insurance website project. Worked with Laravel and Docker and fixed interface bugs.</p></div></div>
       </div>
     </section>
 
-    <section class="section education">
-      <div class="section-heading">
-        <p class="eyebrow">05 / EDUCATION</p>
-        <h2>Background</h2>
-      </div>
-      <div class="edu-row">
-        <div><span class="date">2019 — 2023</span><h3>University of Information Technology</h3><p>Vietnam National University Ho Chi Minh City</p></div>
-        <div><span class="date">2024 — 2026</span><h3>HESED Foreign Language School</h3><p>Setagaya, Tokyo</p></div>
-      </div>
-      <div class="certs">
-        <span>IELTS 6.5 · 2021</span>
-        <span>SUN* Web Development Basic Scrum Course · 2021</span>
-        <span>JLPT N3 · 2022</span>
-        <span>JLPT N2 · 2025</span>
+    <section id="skills" class="section">
+      <div class="skills reveal" data-tilt-card>
+        <div><p class="kicker">04 / TOOLKIT</p><h2>My tech <em>stack.</em></h2><p class="muted">Tools and technologies from my career history and personal projects.</p></div>
+        <div class="skillgrid"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>React.js</span><span>Next.js</span><span>Tailwind CSS</span><span>Laravel</span><span>Python</span><span>PHP</span><span>C#</span><span>MySQL</span><span>Docker</span><span>Git</span><span>GitHub</span><span>GitLab</span><span>VS Code</span></div>
       </div>
     </section>
 
-    <section id="contact" class="section contact">
-      <p class="eyebrow">06 / CONTACT</p>
+    <section class="section">
+      <div class="head reveal"><div><p class="kicker">05 / EDUCATION & CERTIFICATIONS</p><h2>Background.</h2></div></div>
+      <div class="edu">
+        <article class="reveal" data-tilt-card><span>2019 — 2023</span><h3>University of Information Technology</h3><p>Vietnam National University Ho Chi Minh City</p></article>
+        <article class="reveal" data-tilt-card><span>2024 — 2026</span><h3>HESED Foreign Language School</h3><p>Setagaya, Tokyo</p></article>
+      </div>
+      <div class="certs reveal"><b>IELTS 6.5 · 2021</b><b>SUN* Web Development Basic Scrum Course · 2021</b><b>JLPT N3 · 2022</b><b>JLPT N2 · 2025</b></div>
+    </section>
+
+    <section id="contact" class="contact section reveal">
+      <p class="kicker">06 / CONTACT</p>
       <h2>Let's build something<br><em>worth using.</em></h2>
-      <p>Open to opportunities where I can grow as a web developer and contribute as a reliable member of a development team.</p>
-      <div class="contact-links">
-        <a href="mailto:mrnst21@gmail.com">mrnst21@gmail.com ↗</a>
-        <a href="https://github.com/doledangkhoa" target="_blank" rel="noreferrer">github.com/doledangkhoa ↗</a>
-      </div>
+      <p>Open to opportunities where I can grow as a web developer and contribute as a reliable team member.</p>
+      <div class="actions"><a class="btn accent" href="mailto:mrnst21@gmail.com">Get in touch →</a><a class="btn" href="https://github.com/doledangkhoa" target="_blank" rel="noreferrer">GitHub ↗</a></div>
     </section>
   </main>
 
-  <footer><span>© 2026 DO LE DANG KHOA</span><span>Built with HTML · CSS · JS</span></footer>
+  <footer><b>KHOA<span>.</span></b><span>Build · Learn · Improve ♥</span><span>© 2026 DO LE DANG KHOA</span></footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
