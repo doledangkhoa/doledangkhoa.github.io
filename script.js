@@ -3,8 +3,14 @@
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const mobile = window.matchMedia('(max-width: 800px)').matches;
-  const pixelRatio = Math.min(window.devicePixelRatio || 1, mobile ? 1.25 : 1.6);
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const saveData = Boolean(connection && connection.saveData);
+  const modestDevice = (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4)
+    || (navigator.deviceMemory && navigator.deviceMemory <= 4);
+  const pixelRatioCap = mobile ? (modestDevice || saveData ? 1 : 1.15) : (modestDevice || saveData ? 1.2 : 1.45);
+  const pixelRatio = Math.min(window.devicePixelRatio || 1, pixelRatioCap);
   const controllers = [];
+  const sceneFactories = new Map();
 
   const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 
@@ -40,6 +46,64 @@
 
   setupReveal();
 
+  // Mobile navigation (interface only; portfolio content is unchanged).
+  const siteHeader = document.querySelector('header');
+  const menuToggle = document.querySelector('.menu-toggle');
+  if (siteHeader && menuToggle) {
+    const closeMenu = () => {
+      siteHeader.classList.remove('nav-open');
+      document.body.classList.remove('menu-open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    };
+    menuToggle.addEventListener('click', () => {
+      const open = !siteHeader.classList.contains('nav-open');
+      siteHeader.classList.toggle('nav-open', open);
+      document.body.classList.toggle('menu-open', open);
+      menuToggle.setAttribute('aria-expanded', String(open));
+    });
+    siteHeader.querySelectorAll('nav a').forEach(link => link.addEventListener('click', closeMenu));
+    addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+    addEventListener('resize', () => { if (innerWidth > 800) closeMenu(); }, { passive: true });
+  }
+
+  // Small UI polish that does not alter portfolio content.
+  const loader = document.querySelector('.page-loader');
+  const finishLoader = () => loader && loader.classList.add('is-done');
+  if (document.readyState === 'complete') finishLoader();
+  else window.addEventListener('load', finishLoader, { once: true });
+  setTimeout(finishLoader, 620);
+
+  const progressBar = document.querySelector('.scroll-progress i');
+  const navLinks = [...document.querySelectorAll('nav a[href^="#"]')];
+  const navSections = navLinks
+    .map(link => ({ link, section: document.querySelector(link.getAttribute('href')) }))
+    .filter(item => item.section);
+
+  let scrollRaf = 0;
+  const updatePageChrome = () => {
+    scrollRaf = 0;
+    const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+    if (progressBar) progressBar.style.width = `${Math.min(100, Math.max(0, scrollY / max * 100))}%`;
+
+    const probe = scrollY + innerHeight * .28;
+    let current = navSections[0];
+    navSections.forEach(item => {
+      if (item.section.offsetTop <= probe) current = item;
+    });
+    navLinks.forEach(link => {
+      const active = current && link === current.link;
+      link.classList.toggle('active', active);
+      if (active) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
+  };
+  const requestPageChrome = () => {
+    if (!scrollRaf) scrollRaf = requestAnimationFrame(updatePageChrome);
+  };
+  addEventListener('scroll', requestPageChrome, { passive: true });
+  addEventListener('resize', requestPageChrome, { passive: true });
+  updatePageChrome();
+
   function makeRenderer(canvas) {
     const renderer = new THREE.WebGLRenderer({
       canvas,
@@ -49,6 +113,8 @@
     });
     renderer.setPixelRatio(pixelRatio);
     renderer.outputEncoding = THREE.sRGBEncoding;
+    if (THREE.ACESFilmicToneMapping) renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = mobile ? 0.82 : 0.88;
     renderer.setClearColor(0x000000, 0);
     return renderer;
   }
@@ -66,11 +132,14 @@
   }
 
   function addStandardLights(scene, keyColor = 0xffffff) {
-    scene.add(new THREE.HemisphereLight(0xffffff, 0xb8c1d8, 1.5));
-    const key = new THREE.DirectionalLight(keyColor, 2.1);
+    scene.add(new THREE.HemisphereLight(0xf4f7ff, 0x8d99b8, 0.95));
+    const key = new THREE.DirectionalLight(keyColor, 1.18);
     key.position.set(4, 5, 7);
     scene.add(key);
-    const rim = new THREE.DirectionalLight(0x7281ff, 1.1);
+    const fill = new THREE.DirectionalLight(0xb7c4ff, 0.38);
+    fill.position.set(1, -1, 3);
+    scene.add(fill);
+    const rim = new THREE.DirectionalLight(0x6170d8, 0.42);
     rim.position.set(-5, 1, -3);
     scene.add(rim);
   }
@@ -87,7 +156,7 @@
       positions[i * 3 + 2] = r * Math.sin(b) * Math.sin(a);
     }
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    return new THREE.Points(geometry, new THREE.PointsMaterial({ color, size, transparent: true, opacity: .72, depthWrite: false }));
+    return new THREE.Points(geometry, new THREE.PointsMaterial({ color, size, transparent: true, opacity: .48, depthWrite: false }));
   }
 
   function createHeroScene(canvas) {
@@ -101,13 +170,13 @@
     scene.add(group);
 
     const sphereGeo = new THREE.SphereGeometry(1.16, mobile ? 24 : 32, mobile ? 16 : 24);
-    const heroBall = new THREE.Mesh(sphereGeo, new THREE.MeshStandardMaterial({ color: 0xc9ecff, roughness: .18, metalness: .02 }));
+    const heroBall = new THREE.Mesh(sphereGeo, new THREE.MeshStandardMaterial({ color: 0x9fb5ea, roughness: .58, metalness: .015 }));
     heroBall.position.y = .14;
     group.add(heroBall);
 
     const ring = new THREE.Mesh(
       new THREE.TorusGeometry(1.34, .085, 12, 48),
-      new THREE.MeshStandardMaterial({ color: 0x5567f0, roughness: .22, metalness: .06 })
+      new THREE.MeshStandardMaterial({ color: 0x4f63c8, roughness: .4, metalness: .02 })
     );
     ring.rotation.set(.86, .22, .32);
     ring.position.y = .14;
@@ -115,15 +184,15 @@
 
     const mintRing = new THREE.Mesh(
       new THREE.TorusGeometry(1.63, .025, 8, 48),
-      new THREE.MeshBasicMaterial({ color: 0x42d79c, transparent: true, opacity: .48 })
+      new THREE.MeshBasicMaterial({ color: 0x4fc69d, transparent: true, opacity: .34 })
     );
     mintRing.rotation.set(1.12, -.35, .2);
     group.add(mintRing);
 
     const boxGeo = new THREE.BoxGeometry(.62, .62, .62);
-    const boxMaterials = [0xffcf79, 0xc6b9ff, 0x9fe5ff, 0xffb9cc].map(c => new THREE.MeshStandardMaterial({ color: c, roughness: .24 }));
+    const boxMaterials = [0xe6b84f, 0x8f7cc4, 0x63b8d3, 0xd87998].map(c => new THREE.MeshStandardMaterial({ color: c, roughness: .62, metalness: .005 }));
     const boxes = [
-      [-1.82, 1.22, .2], [1.82, 1.2, .08], [2.02, -1.24, .2], [-1.92, -1.3, .1]
+      [-1.66, 1.05, .2], [1.68, 1.03, .08], [1.78, -1.08, .2], [-1.72, -1.12, .1]
     ].map((pos, i) => {
       const m = new THREE.Mesh(boxGeo, boxMaterials[i]);
       m.position.set(...pos); m.rotation.set(.4, .5, .2);
@@ -139,13 +208,13 @@
     button.rotation.x = Math.PI / 2; button.position.z = .305;
     poke.add(top, bottom, stripe, button); group.add(poke);
 
-    const particles = pointsCloud(mobile ? 36 : 56, 2.75, 0x7180f4, .028);
+    const particles = pointsCloud(mobile ? 20 : 34, 2.55, 0x7180f4, .024);
     group.add(particles);
 
     let pointerX = 0, pointerY = 0, smoothX = 0, smoothY = 0;
     const onPointer = e => {
-      pointerX = (e.clientX / innerWidth - .5) * .7;
-      pointerY = (e.clientY / innerHeight - .5) * .4;
+      pointerX = (e.clientX / innerWidth - .5) * .38;
+      pointerY = (e.clientY / innerHeight - .5) * .24;
     };
     window.addEventListener('pointermove', onPointer, { passive: true });
 
@@ -154,19 +223,19 @@
       update(t) {
         smoothX += (pointerX - smoothX) * .035;
         smoothY += (pointerY - smoothY) * .035;
-        group.rotation.y = smoothX + Math.sin(t * .34) * .07;
-        group.rotation.x = -smoothY * .35 + Math.cos(t * .29) * .045;
-        group.position.y = Math.sin(t * .68) * .085;
+        group.rotation.y = smoothX + Math.sin(t * .34) * .045;
+        group.rotation.x = -smoothY * .24 + Math.cos(t * .29) * .028;
+        group.position.y = Math.sin(t * .68) * .055;
         ring.rotation.z = .32 + t * .12;
         mintRing.rotation.z = .2 - t * .08;
         particles.rotation.y = -t * .055;
         boxes.forEach((b, i) => {
-          b.rotation.x += .0015 + i * .00015;
-          b.rotation.y += .0022 + i * .00012;
+          b.rotation.x += .0008 + i * .00008;
+          b.rotation.y += .0012 + i * .00008;
           b.position.y += Math.sin(t * 1.15 + i * 1.7) * .0009;
         });
-        const a = t * .72;
-        poke.position.set(Math.cos(a) * 2.2, Math.sin(a * 1.35) * .75, Math.sin(a) * .55);
+        const a = t * .52;
+        poke.position.set(Math.cos(a) * 1.86, Math.sin(a * 1.28) * .54, Math.sin(a) * .42);
         poke.rotation.y = -a * 1.2;
         poke.rotation.z = Math.sin(t * 1.4) * .18;
       }
@@ -184,10 +253,10 @@
     root.rotation.x = -.08;
     scene.add(root);
 
-    const topMat = new THREE.MeshStandardMaterial({ color: 0xef5669, roughness: .2, metalness: .02 });
-    const bottomMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .2 });
-    const darkMat = new THREE.MeshStandardMaterial({ color: 0x202637, roughness: .26 });
-    const whiteMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .13 });
+    const topMat = new THREE.MeshStandardMaterial({ color: 0xee4f5f, roughness: .34, metalness: .01 });
+    const bottomMat = new THREE.MeshStandardMaterial({ color: 0xfafcff, roughness: .34, metalness: 0 });
+    const darkMat = new THREE.MeshStandardMaterial({ color: 0x1f2430, roughness: .32 });
+    const whiteMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .24, metalness: 0 });
     const top = new THREE.Mesh(new THREE.SphereGeometry(1.2, 32, 20, 0, Math.PI * 2, 0, Math.PI / 2), topMat);
     const bottom = new THREE.Mesh(new THREE.SphereGeometry(1.2, 32, 20, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), bottomMat);
     const band = new THREE.Mesh(new THREE.TorusGeometry(1.205, .105, 12, 48), darkMat);
@@ -197,9 +266,9 @@
     innerButton.rotation.x = Math.PI / 2; innerButton.position.z = 1.22;
     root.add(top, bottom, band, outerButton, innerButton);
 
-    const halo = new THREE.Mesh(new THREE.TorusGeometry(1.65, .022, 8, 64), new THREE.MeshBasicMaterial({ color: 0x5567f0, transparent: true, opacity: .52 }));
+    const halo = new THREE.Mesh(new THREE.TorusGeometry(1.65, .022, 8, 64), new THREE.MeshBasicMaterial({ color: 0x7387e6, transparent: true, opacity: .22 }));
     halo.rotation.set(1.04, .28, .1); root.add(halo);
-    const halo2 = new THREE.Mesh(new THREE.TorusGeometry(1.9, .015, 8, 64), new THREE.MeshBasicMaterial({ color: 0x42d79c, transparent: true, opacity: .42 }));
+    const halo2 = new THREE.Mesh(new THREE.TorusGeometry(1.9, .015, 8, 64), new THREE.MeshBasicMaterial({ color: 0x75d0b0, transparent: true, opacity: .18 }));
     halo2.rotation.set(.66, -.44, -.2); root.add(halo2);
 
     const particles = pointsCloud(mobile ? 34 : 50, 2.15, 0x5b6ff2, .027); root.add(particles);
@@ -242,10 +311,10 @@
     root.position.y = -.2;
     scene.add(root);
 
-    const yellow = new THREE.MeshStandardMaterial({ color: 0xffd84d, roughness: .42 });
-    const dark = new THREE.MeshStandardMaterial({ color: 0x272536, roughness: .4 });
-    const red = new THREE.MeshStandardMaterial({ color: 0xef5c66, roughness: .35 });
-    const brown = new THREE.MeshStandardMaterial({ color: 0xa96a35, roughness: .45 });
+    const yellow = new THREE.MeshStandardMaterial({ color: 0xf6d548, roughness: .48, metalness: 0 });
+    const dark = new THREE.MeshStandardMaterial({ color: 0x1f1f24, roughness: .38 });
+    const red = new THREE.MeshStandardMaterial({ color: 0xee5b5b, roughness: .42 });
+    const brown = new THREE.MeshStandardMaterial({ color: 0x8e5b34, roughness: .48 });
 
     const body = new THREE.Mesh(new THREE.SphereGeometry(.72, 24, 18), yellow);
     body.scale.set(.9, 1.12, .82); body.position.y = -.45; root.add(body);
@@ -285,8 +354,8 @@
     });
     tail.position.set(.84,-.52,-.15); tail.rotation.y=-.25; root.add(tail);
 
-    const particles = pointsCloud(mobile ? 28 : 44, 2.1, 0xffffff, .03); root.add(particles);
-    const energyRing = new THREE.Mesh(new THREE.TorusGeometry(1.58,.022,8,60),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.55}));
+    const particles = pointsCloud(mobile ? 28 : 44, 2.1, 0xfbf4d8, .023); root.add(particles);
+    const energyRing = new THREE.Mesh(new THREE.TorusGeometry(1.58,.022,8,60),new THREE.MeshBasicMaterial({color:0xfff6da,transparent:true,opacity:.22}));
     energyRing.rotation.x=1.1; root.add(energyRing);
 
     return {
@@ -314,38 +383,56 @@
     };
   }
 
-  if (window.THREE) {
-    const safeCreate = (factory, canvas) => {
-      try {
-        controllers.push(factory(canvas));
-      } catch (error) {
-        console.warn('3D scene disabled; the rest of the page will continue normally.', error);
-        canvas.classList.add('scene-unavailable');
-      }
-    };
+  function createSceneSafely(factory, canvas, active = false) {
+    if (!window.THREE || canvas.dataset.sceneReady === '1') return null;
+    try {
+      const controller = factory(canvas);
+      controller.active = active;
+      controllers.push(controller);
+      canvas.dataset.sceneReady = '1';
+      return controller;
+    } catch (error) {
+      console.warn('3D scene disabled; the rest of the page will continue normally.', error);
+      canvas.classList.add('scene-unavailable');
+      canvas.dataset.sceneReady = 'error';
+      return null;
+    }
+  }
 
+  function factoryForCanvas(canvas) {
+    const type = canvas.dataset.scene;
+    if (type === 'pokeball') return createPokeballScene;
+    if (type === 'pikachu') return createPikachuScene;
+    return null;
+  }
+
+  if (window.THREE) {
     const heroCanvas = document.querySelector('#scene');
-    if (heroCanvas) safeCreate(createHeroScene, heroCanvas);
-    document.querySelectorAll('.mini-scene').forEach(canvas => {
-      const type = canvas.dataset.scene;
-      if (type === 'pokeball') safeCreate(createPokeballScene, canvas);
-      if (type === 'pikachu') safeCreate(createPikachuScene, canvas);
-    });
+    if (heroCanvas) createSceneSafely(createHeroScene, heroCanvas, true);
+
+    const miniCanvases = [...document.querySelectorAll('.mini-scene')];
+    if ('IntersectionObserver' in window) {
+      const sceneObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          const canvas = entry.target;
+          let controller = controllers.find(c => c.canvas === canvas);
+          if (entry.isIntersecting && !controller) {
+            const factory = factoryForCanvas(canvas);
+            if (factory) controller = createSceneSafely(factory, canvas, true);
+          }
+          if (controller) controller.active = entry.isIntersecting;
+        });
+      }, { rootMargin: '260px 0px', threshold: .01 });
+      miniCanvases.forEach(canvas => sceneObserver.observe(canvas));
+    } else {
+      miniCanvases.forEach(canvas => {
+        const factory = factoryForCanvas(canvas);
+        if (factory) createSceneSafely(factory, canvas, true);
+      });
+    }
   } else {
     document.querySelectorAll('canvas').forEach(canvas => canvas.classList.add('scene-unavailable'));
     console.warn('Three.js did not load; showing the portfolio without WebGL effects.');
-  }
-
-  if ('IntersectionObserver' in window) {
-    const canvasObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        const controller = controllers.find(c => c.canvas === entry.target);
-        if (controller) controller.active = entry.isIntersecting;
-      });
-    }, { rootMargin: '180px 0px', threshold: .01 });
-    controllers.forEach(c => canvasObserver.observe(c.canvas));
-  } else {
-    controllers.forEach(c => { c.active = true; });
   }
 
   let last = performance.now();
@@ -368,7 +455,7 @@
 
   // Lightweight perspective tilt: no external animation framework needed.
   if (!reducedMotion && !mobile) {
-    document.querySelectorAll('[data-tilt-card]').forEach(card => {
+    document.querySelectorAll('.visual[data-tilt-card], .project[data-tilt-card]').forEach(card => {
       let raf = 0;
       card.addEventListener('pointermove', e => {
         if (raf) cancelAnimationFrame(raf);
@@ -376,8 +463,8 @@
           const rect = card.getBoundingClientRect();
           const x = (e.clientX - rect.left) / rect.width - .5;
           const y = (e.clientY - rect.top) / rect.height - .5;
-          const strength = card.classList.contains('project') ? 5.5 : 2.8;
-          card.style.transform = `perspective(1000px) rotateX(${(-y * strength).toFixed(2)}deg) rotateY(${(x * strength).toFixed(2)}deg) translateY(-2px)`;
+          const strength = card.classList.contains('project') ? 1.9 : 1.15;
+          card.style.transform = `perspective(1000px) rotateX(${(-y * strength).toFixed(2)}deg) rotateY(${(x * strength).toFixed(2)}deg) translateY(-1px)`;
         });
       }, { passive: true });
       card.addEventListener('pointerleave', () => {
@@ -391,7 +478,7 @@
 
   // Cursor glow is intentionally CSS-only and updated with one RAF.
   const glow = document.querySelector('.cursor-glow');
-  if (glow && !mobile && !reducedMotion) {
+  if (glow && !mobile && !reducedMotion && !saveData && !modestDevice) {
     let gx = innerWidth * .75, gy = innerHeight * .25, tx = gx, ty = gy;
     addEventListener('pointermove', e => { tx = e.clientX; ty = e.clientY; }, { passive: true });
     const moveGlow = () => {

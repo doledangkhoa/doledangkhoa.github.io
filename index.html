@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="DO LE DANG KHOA — Web Developer portfolio">
-  <meta name="theme-color" content="#f5f7fb">
+  <meta name="theme-color" content="#f3f4f8">
   <title>DO LE DANG KHOA — Web Developer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +12,9 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <a class="skip-link" href="#projects">Skip to projects</a>
+  <div class="page-loader" aria-hidden="true"><div class="loader-brand">KHOA<span>.</span></div><div class="loader-line"><i></i></div></div>
+  <div class="scroll-progress" aria-hidden="true"><i></i></div>
   <div class="cursor-glow" aria-hidden="true"></div>
 
   <header>
@@ -24,6 +27,7 @@
       <a href="#contact">Contact</a>
     </nav>
     <a class="gh" href="https://github.com/doledangkhoa" target="_blank" rel="noreferrer">GitHub ↗</a>
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false"><span></span><span></span></button>
   </header>
 
   <main>
@@ -55,7 +59,7 @@
     </section>
 
     <section id="about" class="section">
-      <div class="about reveal" data-tilt-card>
+      <div class="about reveal">
         <div class="avatar">
           <div>⌘</div>
           <div class="avatar-ring ring-a"></div>
@@ -83,25 +87,65 @@
       <div class="projects">
         <a class="project p1 reveal pokemon-card" data-tilt-card href="https://github.com/doledangkhoa/Pokedex" target="_blank" rel="noopener noreferrer" aria-label="Open Pokédex project on GitHub">
           <span class="num">01</span><span class="project-link-label">GitHub ↗</span>
-          <div class="art pokemon-art">
-            <canvas class="mini-scene" data-scene="pokeball" aria-label="Animated 3D Poké Ball"></canvas>
+          <div class="art pokemon-art" aria-hidden="true">
+            <div class="pokedex-preview">
+              <div class="preview-toolbar"><i></i><i></i><i></i><span></span></div>
+              <div class="pokedex-preview-body">
+                <div class="pokedex-list-ghost"><i></i><i></i><i></i><i></i></div>
+                <div class="pokedex-stage">
+                  <canvas class="mini-scene" data-scene="pokeball"></canvas>
+                  <div class="pokedex-data-ghost"><b></b><i></i><i></i><i></i></div>
+                </div>
+              </div>
+            </div>
             <div class="poke-hud">
               <span>POKÉDEX // API</span>
-              <span>LIVE 3D</span>
+              <span>POKÉAPI</span>
             </div>
             <div class="scan-line"></div>
           </div>
           <div class="body">
             <small>WEB APP · JAVASCRIPT</small>
             <h3>Pokédex <span class="live-dot"></span></h3>
-            <p>Search, list and detail views using the Pokémon API, with asynchronous requests, error handling and responsive UI.</p>
-            <div class="tags"><i>JavaScript</i><i>API</i><i>HTML</i><i>CSS</i><i>3D UI</i></div>
+            <p>Feature-rich Pokédex powered by PokéAPI, with search and filters, detailed Pokémon data, favorites, comparison, team building, progress tracking and English/Japanese support.</p>
+            <div class="tags"><i>JavaScript</i><i>PokéAPI</i><i>HTML</i><i>CSS</i></div>
           </div>
         </a>
 
         <a class="project p2 reveal" data-tilt-card href="https://github.com/doledangkhoa/sneaker-shop" target="_blank" rel="noopener noreferrer" aria-label="Open Sneaker Shop project on GitHub">
           <span class="num">02</span><span class="project-link-label">GitHub ↗</span>
-          <div class="art"><div class="shoe">⌁</div><div class="platform"></div><div class="float-chip chip-a">UI</div><div class="float-chip chip-b">SHOP</div></div>
+          <div class="art sneaker-art">
+            <div class="sneaker-pair" aria-hidden="true">
+              <svg class="sneaker sneaker-a" viewBox="0 0 360 190" role="img" aria-label="Blue sneaker illustration">
+                <defs>
+                  <linearGradient id="shoeBlueUpper" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4765d8"/><stop offset="1" stop-color="#7aa7ff"/></linearGradient>
+                  <linearGradient id="shoeBlueSole" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f7fbff"/><stop offset="1" stop-color="#d8e6f4"/></linearGradient>
+                </defs>
+                <path class="shoe-shadow" d="M47 147 C92 170 275 174 319 149 C280 181 102 185 47 147Z"/>
+                <path fill="url(#shoeBlueUpper)" d="M43 115 C79 110 101 87 121 55 C132 37 158 35 179 50 L221 81 C244 98 270 108 311 113 L326 137 C300 153 268 157 224 157 L81 157 C53 157 35 145 33 132 C32 124 35 119 43 115Z"/>
+                <path fill="#dfeaff" d="M131 58 L175 83 L205 101 L169 114 L112 91 Z" opacity=".92"/>
+                <path fill="#2448b8" d="M105 91 C128 103 159 112 189 116 L179 133 C146 129 111 120 87 107Z" opacity=".88"/>
+                <path fill="url(#shoeBlueSole)" d="M38 132 C72 143 110 145 166 145 L325 145 C316 160 294 167 255 169 L84 169 C56 169 38 158 35 145 C34 140 35 136 38 132Z"/>
+                <path fill="#ffffff" d="M127 75 L180 103" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+                <path d="M125 84 L171 104 M134 72 L183 98 M144 62 L195 92" stroke="#f8fbff" stroke-width="5" stroke-linecap="round"/>
+                <path fill="#1f2d62" d="M314 113 L333 120 L326 137 L311 137Z"/>
+              </svg>
+              <svg class="sneaker sneaker-b" viewBox="0 0 360 190" role="img" aria-label="Pink sneaker illustration">
+                <defs>
+                  <linearGradient id="shoePinkUpper" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f06c92"/><stop offset="1" stop-color="#ff9eb2"/></linearGradient>
+                  <linearGradient id="shoePinkSole" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fffafc"/><stop offset="1" stop-color="#f0dce4"/></linearGradient>
+                </defs>
+                <path class="shoe-shadow" d="M47 147 C92 170 275 174 319 149 C280 181 102 185 47 147Z"/>
+                <path fill="url(#shoePinkUpper)" d="M43 115 C79 110 101 87 121 55 C132 37 158 35 179 50 L221 81 C244 98 270 108 311 113 L326 137 C300 153 268 157 224 157 L81 157 C53 157 35 145 33 132 C32 124 35 119 43 115Z"/>
+                <path fill="#ffe3ea" d="M131 58 L175 83 L205 101 L169 114 L112 91 Z" opacity=".92"/>
+                <path fill="#c34269" d="M105 91 C128 103 159 112 189 116 L179 133 C146 129 111 120 87 107Z" opacity=".86"/>
+                <path fill="url(#shoePinkSole)" d="M38 132 C72 143 110 145 166 145 L325 145 C316 160 294 167 255 169 L84 169 C56 169 38 158 35 145 C34 140 35 136 38 132Z"/>
+                <path d="M125 84 L171 104 M134 72 L183 98 M144 62 L195 92" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+                <path fill="#7a2945" d="M314 113 L333 120 L326 137 L311 137Z"/>
+              </svg>
+            </div>
+            <div class="platform"></div><div class="float-chip chip-a">UI</div><div class="float-chip chip-b">SHOP</div>
+          </div>
           <div class="body">
             <small>E-COMMERCE UI</small>
             <h3>Sneaker Shop</h3>
@@ -112,32 +156,61 @@
 
         <a class="project p3 reveal pokemon-card" data-tilt-card href="https://github.com/doledangkhoa/Pokedex-Xamarin-" target="_blank" rel="noopener noreferrer" aria-label="Open Pokédex Mobile project on GitHub">
           <span class="num">03</span><span class="project-link-label">GitHub ↗</span>
-          <div class="art pika-art">
-            <canvas class="mini-scene" data-scene="pikachu" aria-label="Animated low-poly Pikachu"></canvas>
+          <div class="art pika-art" aria-hidden="true">
+            <div class="phone-preview">
+              <div class="phone-speaker"></div>
+              <div class="phone-screen">
+                <canvas class="mini-scene" data-scene="pikachu"></canvas>
+                <div class="phone-ui-top"><i></i><span></span></div>
+                <div class="phone-ui-bottom"><i></i><i></i><i></i></div>
+              </div>
+            </div>
             <div class="spark spark-a">✦</div><div class="spark spark-b">✧</div><div class="spark spark-c">✦</div>
           </div>
           <div class="body">
             <small>MOBILE APP</small>
             <h3>Pokédex Mobile <span class="live-dot"></span></h3>
             <p>Cross-platform mobile Pokédex with API data, list/detail screens, navigation and transition animation.</p>
-            <div class="tags"><i>C#</i><i>Xamarin.Forms</i><i>API</i><i>3D Motion</i></div>
+            <div class="tags"><i>C#</i><i>Xamarin.Forms</i><i>API</i></div>
           </div>
         </a>
 
         <a class="project p4 reveal" data-tilt-card href="https://github.com/doledangkhoa/Dungeon-Seeker" target="_blank" rel="noopener noreferrer" aria-label="Open Dungeon-Seeker project on GitHub">
           <span class="num">04</span><span class="project-link-label">GitHub ↗</span>
-          <div class="art"><div class="dungeon">◆</div><div class="floor"></div><div class="dungeon-orb orb-a"></div><div class="dungeon-orb orb-b"></div></div>
+          <div class="art dungeon-art" aria-hidden="true">
+            <div class="dungeon-room">
+              <div class="dungeon-grid">
+                <i></i><i></i><i class="wall"></i><i></i><i></i>
+                <i class="wall"></i><i></i><i></i><i></i><i class="wall"></i>
+                <i></i><i></i><i class="portal"></i><i></i><i></i>
+                <i></i><i class="wall"></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i class="wall"></i><i></i>
+              </div>
+              <span class="dungeon-player"></span>
+              <span class="dungeon-enemy enemy-a"></span>
+              <span class="dungeon-enemy enemy-b"></span>
+            </div>
+            <div class="dungeon-depth depth-a"></div><div class="dungeon-depth depth-b"></div>
+          </div>
           <div class="body">
             <small>GAME · PYTHON</small>
             <h3>Dungeon-Seeker</h3>
-            <p>Infinite dungeon game with procedural generation, player movement, enemy AI, collision detection, scoring and leveling.</p>
+            <p>Infinite dungeon game with procedural generation, player movement, collision detection, scoring and leveling.</p>
             <div class="tags"><i>Python</i><i>Pygame</i></div>
           </div>
         </a>
 
-        <a class="project p5 reveal" data-tilt-card href="https://github.com/doledangkhoa?tab=repositories" target="_blank" rel="noopener noreferrer" aria-label="View repositories for Daily-concentrate on GitHub">
+        <a class="project p5 reveal" data-tilt-card href="https://github.com/doledangkhoa/daily-concentrate" target="_blank" rel="noopener noreferrer" aria-label="Open Daily-concentrate project on GitHub">
           <span class="num">05</span><span class="project-link-label">GitHub ↗</span>
-          <div class="art"><div class="cells">▦</div><div class="timer">00:32</div><div class="focus-ring"></div></div>
+          <div class="art focus-art" aria-hidden="true">
+            <div class="focus-board">
+              <span>7</span><span>2</span><span>14</span><span>5</span>
+              <span>11</span><span>9</span><span class="active-cell">12</span><span>1</span>
+              <span>4</span><span>16</span><span>6</span><span>10</span>
+              <span>15</span><span>3</span><span>13</span><span>8</span>
+            </div>
+            <div class="timer">00:32</div><div class="focus-ring"></div>
+          </div>
           <div class="body">
             <small>MINI GAME · WEB</small>
             <h3>Daily-concentrate</h3>
@@ -150,15 +223,14 @@
 
     <section id="experience" class="section">
       <div class="head reveal"><div><p class="kicker">03 / EXPERIENCE</p><h2>Where I've <em>worked.</em></h2></div></div>
-      <div class="timeline">
+      <div class="experience-grid">
         <div class="exp reveal"><time>JUN 2026 — PRESENT</time><div><h3>株式会社エスピーシステム <small>· Full-time</small></h3><p>Design and development of internal websites and web-based projects.</p></div></div>
         <div class="exp reveal"><time>NOV 2023 — APR 2024</time><div><h3>Freelance Web Developer</h3><p>Next.js study-abroad website: interface implementation, bug fixing and responsive development using GitLab.</p></div></div>
-        <div class="exp reveal"><time>NOV 2022 — FEB 2023</time><div><h3>株式会社 AI POWER <small>· Intern</small></h3><p>Bekai insurance website project. Worked with Laravel and Docker and fixed interface bugs.</p></div></div>
       </div>
     </section>
 
     <section id="skills" class="section">
-      <div class="skills reveal" data-tilt-card>
+      <div class="skills reveal">
         <div><p class="kicker">04 / TOOLKIT</p><h2>My tech <em>stack.</em></h2><p class="muted">Tools and technologies from my career history and personal projects.</p></div>
         <div class="skillgrid"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>React.js</span><span>Next.js</span><span>Tailwind CSS</span><span>Laravel</span><span>Python</span><span>PHP</span><span>C#</span><span>MySQL</span><span>Docker</span><span>Git</span><span>GitHub</span><span>GitLab</span><span>VS Code</span></div>
       </div>
@@ -167,8 +239,8 @@
     <section class="section">
       <div class="head reveal"><div><p class="kicker">05 / EDUCATION & CERTIFICATIONS</p><h2>Background.</h2></div></div>
       <div class="edu">
-        <article class="reveal" data-tilt-card><span>2019 — 2023</span><h3>University of Information Technology</h3><p>Vietnam National University Ho Chi Minh City</p></article>
-        <article class="reveal" data-tilt-card><span>2024 — 2026</span><h3>HESED Foreign Language School</h3><p>Setagaya, Tokyo</p></article>
+        <article class="reveal"><span>2019 — 2023</span><h3>University of Information Technology</h3><p>Vietnam National University Ho Chi Minh City</p></article>
+        <article class="reveal"><span>2024 — 2026</span><h3>HESED Foreign Language School</h3><p>Setagaya, Tokyo</p></article>
       </div>
       <div class="certs reveal"><b>IELTS 6.5 · 2021</b><b>SUN* Web Development Basic Scrum Course · 2021</b><b>JLPT N3 · 2022</b><b>JLPT N2 · 2025</b></div>
     </section>
@@ -183,7 +255,7 @@
 
   <footer><b>KHOA<span>.</span></b><span>Build · Learn · Improve ♥</span><span>© 2026 DO LE DANG KHOA</span></footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="script.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script defer src="script.js"></script>
 </body>
 </html>
