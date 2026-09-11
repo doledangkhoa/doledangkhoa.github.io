@@ -37,7 +37,7 @@ I enjoy creating interfaces, fixing bugs, improving responsive layouts and turni
 
 Pokémon search, list and detail views using the Pokémon API, asynchronous requests, error handling and responsive UI. The portfolio presentation includes an animated **3D Poké Ball** and interactive effects.
 
-`JavaScript` `API` `HTML` `CSS` `Three.js` `3D UI`
+`JavaScript` `API` `HTML` `CSS` 
 
 ### 02 · Sneaker Shop
 **E-commerce UI**
@@ -51,7 +51,7 @@ Responsive sneaker-store interface with product listing, product details, cart f
 
 Cross-platform mobile Pokédex with API data, list/detail screens, navigation and transition animations. The portfolio includes an animated low-poly **Pikachu 3D scene**.
 
-`C#` `Xamarin.Forms` `API` `3D Motion`
+`C#` `Xamarin.Forms` `API` 
 
 ### 04 · Dungeon-Seeker
 **Game · Python**
