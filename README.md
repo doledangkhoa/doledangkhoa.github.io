@@ -93,11 +93,11 @@ Worked on the Bekai insurance website project using Laravel and Docker, with a f
 ## 🛠️ Tech Stack
 
 <div align="left">
-  <img src="https://skillicons.dev/icons?i=html,css,js,react,nextjs,tailwind,laravel,python,php,cs,mysql,docker,git,github,gitlab,vscode" alt="Tech stack" />
+  <img src="https://skillicons.dev/icons?i=html,css,js,react,vuejs,nextjs,tailwind,laravel,python,php,cs,mysql,docker,git,github,gitlab,vscode" alt="Tech stack" />
 </div>
 
 ### Front-end
-`HTML` · `CSS` · `JavaScript` · `React.js` · `Next.js` · `Tailwind CSS`
+`HTML` · `CSS` · `JavaScript` · `React.js` · `Next.js` · `Vue.js` · `Tailwind CSS`
 
 ### Back-end / Programming
 `Laravel` · `PHP` · `Python` · `C#`
